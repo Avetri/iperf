@@ -217,9 +217,9 @@ iperf_udp_send(struct iperf_stream *sp)
     if (0 == sp->settings->random_blksize) {
         size = sp->settings->blksize;
     } else {
-        size = rand()%sp->settings->blksize;
-        if (0 == size) {
-            size = 1;
+        size = 16;
+        if (16 < sp->settings->blksize) {
+            size += rand()%(sp->settings->blksize-16);
         }
     }
     struct iperf_time before;
