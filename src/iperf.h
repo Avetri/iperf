@@ -140,6 +140,7 @@ struct iperf_settings
 {
     int       domain;               /* AF_INET or AF_INET6 */
     int       socket_bufsize;       /* window size for TCP */
+    int       random_blksize;
     int       blksize;              /* size of read/writes (-l) */
     iperf_size_t  rate;                 /* target data rate for application pacing*/
     iperf_size_t  bitrate_limit;   /* server's maximum allowed total data rate for all streams*/

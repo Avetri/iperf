@@ -213,7 +213,15 @@ int
 iperf_udp_send(struct iperf_stream *sp)
 {
     int r;
-    int       size = sp->settings->blksize;
+    int       size;
+    if (0 == sp->settings->random_blksize) {
+        size = sp->settings->blksize;
+    } else {
+        size = rand()%sp->settings->blksize;
+        if (0 == size) {
+            size = 1;
+        }
+    }
     struct iperf_time before;
 
     iperf_time_now(&before);

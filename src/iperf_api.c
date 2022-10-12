@@ -1018,6 +1018,7 @@ iperf_parse_arguments(struct iperf_test *test, int argc, char **argv)
         {"time", required_argument, NULL, 't'},
         {"bytes", required_argument, NULL, 'n'},
         {"blockcount", required_argument, NULL, 'k'},
+        {"rnd-length", no_argument, NULL, 'J'},
         {"length", required_argument, NULL, 'l'},
         {"parallel", required_argument, NULL, 'P'},
         {"reverse", no_argument, NULL, 'R'},
@@ -1102,7 +1103,7 @@ iperf_parse_arguments(struct iperf_test *test, int argc, char **argv)
     char *client_username = NULL, *client_rsa_public_key = NULL, *server_rsa_private_key = NULL;
 #endif /* HAVE_SSL */
 
-    while ((flag = getopt_long(argc, argv, "p:f:i:D1VJvsc:ub:t:n:k:l:P:Rw:B:M:N46S:L:ZO:F:A:T:C:dI:hX:", longopts, NULL)) != -1) {
+    while ((flag = getopt_long(argc, argv, "p:f:i:D1VJvsc:ub:t:n:k:Wl:P:Rw:B:M:N46S:L:ZO:F:A:T:C:dI:hX:", longopts, NULL)) != -1) {
         switch (flag) {
             case 'p':
 		portno = atoi(optarg);
@@ -1255,6 +1256,11 @@ iperf_parse_arguments(struct iperf_test *test, int argc, char **argv)
                 break;
             case 'k':
                 test->settings->blocks = unit_atoi(optarg);
+		client_flag = 1;
+                break;
+            case 'W':
+                srand(time(0));
+                test->settings->random_blksize = 1;
 		client_flag = 1;
                 break;
             case 'l':
