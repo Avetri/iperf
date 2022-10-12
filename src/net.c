@@ -385,6 +385,9 @@ Nread(int fd, char *buf, size_t count, int prot)
 
         nleft -= r;
         buf += r;
+        if (prot == SOCK_DGRAM) {
+            break;
+        }
     }
     return count - nleft;
 }
